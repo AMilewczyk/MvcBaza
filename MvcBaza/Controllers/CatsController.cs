@@ -20,11 +20,23 @@ namespace MvcBaza.Controllers
         }
 
         // GET: Cats
-        public async Task<IActionResult> Index()
+        // dodane index
+        public async Task<IActionResult> Index(string searchString)
         {
-              return _context.Cat != null ? 
-                          View(await _context.Cat.ToListAsync()) :
-                          Problem("Entity set 'MvcBazaContext.Cat'  is null.");
+            if (_context.Cat == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            var cats = from c in _context.Cat
+                       select c;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                cats = cats.Where(s => s.Name!.Contains(searchString));
+            }
+
+            return View(await cats.ToListAsync());
         }
 
         // GET: Cats/Details/5
@@ -159,5 +171,8 @@ namespace MvcBaza.Controllers
         {
           return (_context.Cat?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+       
+
     }
 }

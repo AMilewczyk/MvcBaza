@@ -9,6 +9,16 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+// add method="get" to work
+<form asp-controller="Cats" asp-action="Index" method="get">
+    <p>
+        Title: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+
 <table class="table">
     <thead>
         <tr>
