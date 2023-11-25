@@ -21,12 +21,17 @@ namespace MvcBaza.Controllers
 
         // GET: Cats
         // dodane index
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string catGenre, string searchString)
         {
             if (_context.Cat == null)
             {
-                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+                return Problem("Entity set 'MvcCatContext.Cat'  is null.");
             }
+
+            // Use LINQ to get list of genres.
+            IQueryable<string> genreQuery = from m in _context.Cat
+                                            orderby m.Genre
+                                            select m.Genre;
 
             var cats = from c in _context.Cat
                        select c;
