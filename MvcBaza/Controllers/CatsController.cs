@@ -44,7 +44,7 @@ namespace MvcBaza.Controllers
             return View(await cats.ToListAsync());
         }
 
-        // GET: Cats/Details/5
+        // GET: /Cat/Welcome/ 
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Cat == null)

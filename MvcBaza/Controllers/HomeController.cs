@@ -18,6 +18,16 @@ namespace MvcBaza.Controllers
             return View();
         }
 
+        public IActionResult MvcBaza()
+        {
+            return View();
+        }
+
+        public IActionResult CatBaza()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
