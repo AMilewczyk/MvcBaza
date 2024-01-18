@@ -1,4 +1,7 @@
-﻿@model MvcBaza.Models.CatGenreViewModel
+﻿
+
+
+@model IEnumerable<MvcBaza.Models.Cat>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,40 +13,31 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-// add method="get" to work
-<form asp-controller="Cats" asp-action="Index" method="get">
-    <p>
-        <select asp-for="CatGenre" asp-items="Model.Genres">
-            <option value="">All</option>
-        </select>
+<form asp-controller="Cats" asp-action="Index">
 
-        Title: <input type="text" asp-for="SearchString" />
+    <p>
+
+        Title: <input type="text" name="SearchString" />
         <input type="submit" value="Filter" />
+
     </p>
+
 </form>
 
 
-<table class="table">
-    <thead>
+
+    
+<table class="table table-bordered" />
+
+
+<tbody>
+
+    
+    @foreach (var item in Model)
+    {
+        
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cats![0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cats![0].Years)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cats![0].Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cats![0].Behawior)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Cats!) {
-        <tr>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -62,6 +56,7 @@
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
-    </tbody>
+    }
+</tbody>
 </table>
+

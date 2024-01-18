@@ -11,8 +11,8 @@ namespace MvcBaza.Models;
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MvcBazaContext>>()))
             {
-                // Look for any cats.
-                if (context.Cat.Any())
+            // Look for any cats.
+            if (context.Cat.Any())
                 {
                     return;   // DB has been seeded
                 }

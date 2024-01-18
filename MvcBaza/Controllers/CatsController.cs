@@ -21,28 +21,74 @@ namespace MvcBaza.Controllers
 
         // GET: Cats
         // dodane index
-        public async Task<IActionResult> Index(string catGenre, string searchString)
+
+        
+        public async Task<IActionResult> Index(string searchString)
         {
             if (_context.Cat == null)
             {
-                return Problem("Entity set 'MvcCatContext.Cat'  is null.");
+                return Problem("Entity set 'MvcBazaContext.Cat'  is null.");
             }
 
-            // Use LINQ to get list of genres.
-            IQueryable<string> genreQuery = from m in _context.Cat
-                                            orderby m.Genre
-                                            select m.Genre;
-
-            var cats = from c in _context.Cat
-                       select c;
+            var cats = from m in _context.Cat
+                         select m;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                cats = cats.Where(s => s.Name!.Contains(searchString));
+                cats = cats.Where(s => s.Genre!.Contains(searchString));
             }
 
             return View(await cats.ToListAsync());
         }
+
+        
+
+        // GET: Movies
+
+        // GET: Movies
+
+        /*
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Cat.ToListAsync());
+        }
+        */
+
+        /*
+        public async Task<IActionResult> Index(string movieGenre, string searchString)
+        {
+            if (_context.Cat == null)
+            {
+                return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+            }
+
+            // Use LINQ to get list of genres.
+            IQueryable<string> genreQuery = from c in _context.Cat
+                                            orderby c.Genre
+                                            select c.Genre;
+            var cats = from c in _context.Cat
+                         select c;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                cats = cats.Where(s => s.Genre!.Contains(searchString));
+            }
+
+            if (!string.IsNullOrEmpty(catGenre))
+            {
+                cats = cats.Where(x => x.Genre == catGenre);
+            }
+
+            var catGenreVM = new CatGenreViewModel
+            {
+                Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+                Cats = await cats.ToListAsync()
+            };
+
+            return View(catGenreVM);
+        }
+
+        */
 
         // GET: /Cat/Welcome/ 
         public async Task<IActionResult> Details(int? id)
@@ -65,6 +111,7 @@ namespace MvcBaza.Controllers
         // GET: Cats/Create
         public IActionResult Create()
         {
+            Console.WriteLine("test Cat");
             return View();
         }
 
@@ -75,6 +122,7 @@ namespace MvcBaza.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Years,Genre,Behawior")] Cat cat)
         {
+            Console.WriteLine("test Cat");
             if (ModelState.IsValid)
             {
                 _context.Add(cat);
